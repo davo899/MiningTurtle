@@ -1,10 +1,11 @@
 local mTurtle = require("lib/m-turtle")
 
-local WIDTH = 16
-local LENGTH = 200
+local WIDTH = tonumber(arg[1])
+local LENGTH = tonumber(arg[2])
 
 local DISCARD = {
     "minecraft:dirt",
+    "minecraft:cobblestone",
     "minecraft:stone",
     "minecraft:gravel"
 }
@@ -36,9 +37,9 @@ for i = 1, LENGTH do
 
     --- Turn to face next row
     if i % 2 == 1 then
-        turtle.turnRight()
-    else
         turtle.turnLeft()
+    else
+        turtle.turnRight()
     end
 
     --- Discard waste items
