@@ -49,4 +49,7 @@ for i = 1, LENGTH do
     if turtle.getFuelLevel() < 1000 then
         mTurtle.useAllFuel()
     end
+
+    --- Combine stacks to make space
+    mTurtle.combineAllStacks()
 end

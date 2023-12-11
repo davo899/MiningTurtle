@@ -93,4 +93,18 @@ function M.dropAll(discard)
     end
 end
 
+--- Combines all pairs of itemstacks in turtle's inventory where possible
+function M.combineAllStacks()
+    for i = 1, 16 do
+        turtle.select(i)
+        for j = i + 1, 16 do
+            if turtle.compareTo(j)then
+                turtle.select(j)
+                turtle.transferTo(i)
+                turtle.select(i)
+            end
+        end
+    end
+end
+
 return M
