@@ -17,40 +17,42 @@ function M.placeTorchBelow()
     end
 end
 
-function M.mine(move)
-    local nonAir, _ = turtle.inspect()
-    if nonAir then
-        turtle.dig()
+local function inspect(direction)
+    if     direction == "up"   then return turtle.inspectUp()
+    elseif direction == "down" then return turtle.inspectDown()
+    else                            return turtle.inspect()
     end
-    if move then
-        while not turtle.forward() do
-            turtle.dig()
+end
+
+local function dig(direction)
+    if     direction == "up"   then return turtle.digUp()
+    elseif direction == "down" then return turtle.digDown()
+    else                            return turtle.dig()
+    end
+end
+
+local function move(direction)
+    if     direction == "up"   then return turtle.up()
+    elseif direction == "down" then return turtle.down()
+    elseif direction == "back" then return turtle.back()
+    else                            return turtle.forward()
+    end
+end
+
+function M.mine(direction, shouldMove)
+    local nonAir, _ = inspect(direction)
+    if nonAir then
+        dig(direction)
+    end
+    if shouldMove then
+        while not move(direction) do
+            dig(direction)
         end
     end
 end
 
-function M.mineUp(move)
-    local nonAir, _ = turtle.inspectUp()
-    if nonAir then
-        turtle.digUp()
-    end
-    if move then
-        while not turtle.up() do
-            turtle.digUp()
-        end
-    end
-end
+function M.dropAll(discard)
 
-function M.mineDown(move)
-    local nonAir, _ = turtle.inspectDown()
-    if nonAir then
-        turtle.digDown()
-    end
-    if move then
-        while not turtle.down() do
-            turtle.digDown()
-        end
-    end
 end
 
 return M
