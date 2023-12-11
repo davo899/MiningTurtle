@@ -1,5 +1,6 @@
 M = {}
 
+--- Attempts to use all items in inventory as fuel
 function M.useAllFuel()
     for i = 1, 16 do
         turtle.select(i)
@@ -7,6 +8,7 @@ function M.useAllFuel()
     end
 end
 
+--- Places a torch below the turtle if there is space and the turtle has a torch
 function M.placeTorchBelow()
     for i = 1, 16 do
         local item = turtle.getItemDetail(i)
@@ -39,6 +41,7 @@ local function move(direction)
     end
 end
 
+--- Digs in the given direction, and optionally moves in that direction
 function M.mine(direction, shouldMove)
     local nonAir, _ = inspect(direction)
     if nonAir then
@@ -51,8 +54,25 @@ function M.mine(direction, shouldMove)
     end
 end
 
-function M.dropAll(discard)
+--- Returns whether the given element is in the given table
+local function contains(table_, element)
+    for i = 1, #table_ do
+        if table_[i] == element then
+            return true
+        end
+    end
+    return false
+end
 
+--- Drop all items in inventory that are in the discard table
+function M.dropAll(discard)
+    for i = 1, 16 do
+        local item = turtle.getItemDetail(i)
+        if item and contains(discard, item.name) then
+            turtle.select(i)
+            turtle.drop()
+        end
+    end
 end
 
 return M
