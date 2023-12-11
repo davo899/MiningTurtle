@@ -9,12 +9,30 @@ function M.useAllFuel()
 end
 
 --- Places a torch below the turtle if there is space and the turtle has a torch
-function M.placeTorchBelow()
+function M.placeTorchBelow(shouldWait)
+    local hasTorch = false
     for i = 1, 16 do
         local item = turtle.getItemDetail(i)
         if item and item.name == "minecraft:torch" then
             turtle.select(i)
             turtle.placeDown()
+            hasTorch = true
+        end
+    end
+
+    if shouldWait and not hasTorch then
+        print("Waiting for torch to be supplied.")
+        while not hasTorch do
+            os.queueEvent("randomEvent")
+            os.pullEvent()
+            for i = 1, 16 do
+                local item = turtle.getItemDetail(i)
+                if item and item.name == "minecraft:torch" then
+                    turtle.select(i)
+                    turtle.placeDown()
+                    hasTorch = true
+                end
+            end
         end
     end
 end

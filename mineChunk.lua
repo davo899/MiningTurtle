@@ -31,7 +31,7 @@ for i = 1, LENGTH do
 
         --- Place a torch every 4th row and column
         if i % 4 == 0 and j % 4 == 0 then
-            mTurtle.placeTorchBelow()
+            mTurtle.placeTorchBelow(true)
         end
     end
 
